@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor y Buscador de Películas y Series</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        iframe {
+            width: 80%;
+            height: 60vh;
+            border: none;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            width: 80%;
+            display: flex;
+            justify-content: center;
+        }
+        .search-container input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .search-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe src="http://95.211.95.114:8096/web/index.html#!/home"></iframe>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar películas o series...">
+        <button onclick="searchContent()">Buscar</button>
+    </div>
+
+    <script>
+        function searchContent() {
+            const query = document.getElementById('searchInput').value;
+            alert(`Buscando: ${query}`);
+            // Aquí puedes agregar la lógica para buscar y descargar el contenido
+            // Nota: Descargar contenido directamente desde un sitio web puede ser ilegal sin los permisos adecuados.
+        }
+    </script>
+
+</body>
+</html>
