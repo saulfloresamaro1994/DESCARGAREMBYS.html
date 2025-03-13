@@ -11,27 +11,39 @@
         }
         #contenedor {
             width: 100%;
-            height: 80vh;
+            height: 70vh;
             border: 1px solid #ccc;
             margin-bottom: 20px;
         }
-        .boton-descarga {
+        .boton-descarga, #selector-temporadas {
             padding: 10px 20px;
             background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
             font-size: 16px;
+            margin-right: 10px;
         }
-        .boton-descarga:hover {
+        .boton-descarga:hover, #selector-temporadas:hover {
             background-color: #0056b3;
+        }
+        #selector-temporadas {
+            background-color: #28a745;
+        }
+        #selector-temporadas option {
+            background-color: white;
+            color: black;
         }
     </style>
 </head>
 <body>
     <h1>Prueba de Descarga de Series</h1>
     <iframe id="contenedor" src="http://95.211.95.114:8096/web/index.html#!/home"></iframe>
-    <button class="boton-descarga" onclick="descargarTemporada()">Descargar Temporada Completa</button>
+    <br><br>
+    <select id="selector-temporadas" onchange="seleccionarTemporada()">
+        <option value="">Selecciona una temporada</option>
+    </select>
+    <button class="boton-descarga" onclick="descargarTemporada()">Descargar Temporada Seleccionada</button>
 
     <script>
         // Función para automatizar el inicio de sesión
@@ -54,20 +66,59 @@
                     // Hacer clic en el botón de inicio de sesión
                     loginButton.click();
                     console.log('Inicio de sesión automatizado completado.');
+
+                    // Esperar a que la página redirija y cargue la lista de series
+                    setTimeout(detectarTemporadas, 5000); // Ajusta el tiempo según sea necesario
                 } else {
                     console.error('No se encontraron los campos de inicio de sesión.');
                 }
             };
         }
 
-        // Función para descargar una temporada completa
+        // Función para detectar las temporadas disponibles
+        function detectarTemporadas() {
+            const iframe = document.getElementById('contenedor');
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+            // Simular la detección de temporadas (ajusta los selectores según tu página)
+            const temporadas = iframeDocument.querySelectorAll('.temporada'); // Ejemplo: elementos con clase "temporada"
+            const selector = document.getElementById('selector-temporadas');
+
+            if (temporadas.length > 0) {
+                temporadas.forEach((temporada, index) => {
+                    const option = document.createElement('option');
+                    option.value = index + 1; // Número de temporada
+                    option.textContent = `Temporada ${index + 1}`;
+                    selector.appendChild(option);
+                });
+                console.log('Temporadas detectadas:', temporadas.length);
+            } else {
+                console.error('No se encontraron temporadas.');
+            }
+        }
+
+        // Función para manejar la selección de temporada
+        function seleccionarTemporada() {
+            const selector = document.getElementById('selector-temporadas');
+            const temporadaSeleccionada = selector.value;
+            console.log('Temporada seleccionada:', temporadaSeleccionada);
+        }
+
+        // Función para descargar la temporada seleccionada
         function descargarTemporada() {
-            // Simular la descarga de un archivo (enlace de ejemplo)
-            const enlaceDescarga = document.createElement('a');
-            enlaceDescarga.href = 'https://ejemplo.com/temporada1.zip'; // Reemplaza con el enlace real
-            enlaceDescarga.download = 'temporada1.zip'; // Nombre del archivo descargado
-            enlaceDescarga.click();
-            console.log('Descarga de la temporada iniciada.');
+            const selector = document.getElementById('selector-temporadas');
+            const temporadaSeleccionada = selector.value;
+
+            if (temporadaSeleccionada) {
+                // Simular la descarga de un archivo (enlace de ejemplo)
+                const enlaceDescarga = document.createElement('a');
+                enlaceDescarga.href = `https://ejemplo.com/temporada${temporadaSeleccionada}.zip`; // Reemplaza con el enlace real
+                enlaceDescarga.download = `temporada${temporadaSeleccionada}.zip`; // Nombre del archivo descargado
+                enlaceDescarga.click();
+                console.log(`Descarga de la temporada ${temporadaSeleccionada} iniciada.`);
+            } else {
+                alert('Por favor, selecciona una temporada.');
+            }
         }
 
         // Iniciar sesión automáticamente al cargar la página
