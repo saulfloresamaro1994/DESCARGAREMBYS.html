@@ -3,59 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor y Buscador de Películas y Series</title>
+    <title>Prueba de Descarga de Series</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            margin: 20px;
         }
-        iframe {
-            width: 80%;
-            height: 60vh;
-            border: none;
+        #contenedor {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid #ccc;
             margin-bottom: 20px;
         }
-        .search-container {
-            width: 80%;
-            display: flex;
-            justify-content: center;
-        }
-        .search-container input {
-            width: 70%;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .search-container button {
+        .boton-descarga {
             padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
             font-size: 16px;
-            margin-left: 10px;
+        }
+        .boton-descarga:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-
-    <iframe src="http://95.211.95.114:8096/web/index.html#!/home"></iframe>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Buscar películas o series...">
-        <button onclick="searchContent()">Buscar</button>
-    </div>
+    <h1>Prueba de Descarga de Series</h1>
+    <iframe id="contenedor" src="http://95.211.95.114:8096/web/index.html#!/home"></iframe>
+    <button class="boton-descarga" onclick="descargarTemporada()">Descargar Temporada Completa</button>
 
     <script>
-        function searchContent() {
-            const query = document.getElementById('searchInput').value;
-            alert(`Buscando: ${query}`);
-            // Aquí puedes agregar la lógica para buscar y descargar el contenido
-            // Nota: Descargar contenido directamente desde un sitio web puede ser ilegal sin los permisos adecuados.
-        }
-    </script>
+        // Función para automatizar el inicio de sesión
+        function iniciarSesion() {
+            const iframe = document.getElementById('contenedor');
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
+            // Esperar a que el iframe cargue completamente
+            iframe.onload = function() {
+                // Seleccionar los campos de inicio de sesión
+                const emailField = iframeDocument.querySelector('input[type="email"]');
+                const passwordField = iframeDocument.querySelector('input[type="password"]');
+                const loginButton = iframeDocument.querySelector('button[type="submit"]');
+
+                if (emailField && passwordField && loginButton) {
+                    // Rellenar los campos de correo y contraseña
+                    emailField.value = 'xomosar787@merotx.com';
+                    passwordField.value = 'xomosar7';
+
+                    // Hacer clic en el botón de inicio de sesión
+                    loginButton.click();
+                    console.log('Inicio de sesión automatizado completado.');
+                } else {
+                    console.error('No se encontraron los campos de inicio de sesión.');
+                }
+            };
+        }
+
+        // Función para descargar una temporada completa
+        function descargarTemporada() {
+            // Simular la descarga de un archivo (enlace de ejemplo)
+            const enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = 'https://ejemplo.com/temporada1.zip'; // Reemplaza con el enlace real
+            enlaceDescarga.download = 'temporada1.zip'; // Nombre del archivo descargado
+            enlaceDescarga.click();
+            console.log('Descarga de la temporada iniciada.');
+        }
+
+        // Iniciar sesión automáticamente al cargar la página
+        window.onload = iniciarSesion;
+    </script>
 </body>
 </html>
